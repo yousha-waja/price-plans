@@ -1,0 +1,27 @@
+body{
+    background-color: rgb(0, 0, 0);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bolder;
+}
+
+section{
+    margin: 1dvh 5dvh;
+    border: 2dvh double rgb(0, 102, 255);
+    border-radius: 10dvh
+}
+
+.section1 button, .section2 button, .section3 button {
+    margin: 2dvh 0dvh;
+    border: 4px ridge black;
+    border-radius:2%;
+    padding-top: 0%;
+    padding-bottom: 4%;
+}
+
+input::placeholder {
+    color: rgba(0, 0, 0, 0.573); /* Change to your desired color */
+}
+
+.line{
+    background-color: brown;
+}

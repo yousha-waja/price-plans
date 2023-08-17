@@ -1,0 +1,44 @@
+### Get price_plan
+
+GET http://localhost:3011/api/price_plans/
+
+### Get total phone bill
+
+POST http://localhost:3011/api/phonebill/
+content-type: application/json
+
+{
+  "price_plan":"cALl 101",
+  "actions" : "sms,call,sms,sms,call,sms,     sms, Call,CALL,Sms"
+}
+
+### Create new price plan
+
+POST http://localhost:3011/api/price_plan/create
+content-type: application/json
+
+{
+  "plan_name":"NKXfhuguifkugR",
+  "sms_price" : "3",
+  "call_price" :4
+}
+
+### Update a price plan
+
+POST http://localhost:3011/api/price_plan/update
+Content-Type: application/json
+
+{
+  "plan_name":"call 201",
+  "sms_price" : 33,
+  "call_price" :356
+}
+
+### Delte a price plan
+
+POST http://localhost:3011/api/price_plan/delete
+Content-Type: application/json
+
+{
+  "plan_name":"NKXfhuguifkugR"
+}

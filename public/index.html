@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>database widget</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+      integrity="sha512-UJfAaOlIRtdR+0P6C3KUoTDAxVTuy3lnSXLyLKlHYJlcSU8Juge/mjeaxDNMlw9LgeIotgz5FP8eUQPhX1q10A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./container.js"></script>
+  </head>
+  <body x-data="container">
+    <h1 class="yellow-text text-lighten-2 center-align">Price Planner</h1>
+    
+    <!-- Get price plans-->
+    <section class="light-blue accent-3 section1">
+      <div class="container center-align">
+        <h3 x-show="showPrices">
+          <button
+            class="btn waves-effect waves-light yellow lighten-2 light-blue-text text-darken-1"
+            x-on:click="getPricePlan"
+          >
+            Show prices
+          </button>
+        </h3>
+        <h3 x-show="!showPrices">
+          <button
+            class="btn waves-effect waves-light black light-blue-text text-darken-1"
+            x-on:click="hidePricePlan"
+          >
+            Hide prices
+          </button>
+        </h3>
+        <template x-for="plan in pricePlans" :key="plan.id">
+          <div x-show="hidePrices">
+            <div class="divider yellow lighten-2"></div>
+            <h3 x-text="plan.plan_name"></h3>
+            <p>SMS Price: R<span x-html="plan.sms_price"></span></p>
+            <p>Call Price: R<span x-html="plan.call_price"></span></p>
+            <div class="divider yellow lighten-2"></div>
+          </div>
+        </template>
+      </div>
+    </section>
+
+    <!-- Calculate total phone bill -->
+    <section class="yellow lighten-2  section2">
+      <div class="container center-align">
+        <h3>Total Phone Bill</h3>
+        <span x-show="showInputs1">
+          <input
+            x-model="planName1"
+            type="text"
+            placeholder="Enter Price Plan here"
+          />
+          <input
+            x-model="dataUsage"
+            type="text"
+            placeholder="Enter projected data usage here"
+          />
+        </span>
+        <div
+          x-html="answer1"
+          x-show="showAnswer1"
+          style="font-size: x-large"
+        ></div>
+        <div
+          x-html="error1"
+          x-show="showError1"
+          style="font-size: x-large"
+        ></div>
+        <button
+          x-on:click="reset1"
+          x-show="showReset1"
+          class="btn waves-effect waves-light black light-blue-text text-darken-1"
+        >
+          Reset
+        </button>
+        <button
+          x-on:click="calculateTotal"
+          x-show="showSubmit1"
+          class="btn waves-effect waves-light light-blue accent-3 yellow-text text-lighten-2"
+          x-bind:disabled="!planName1 || !dataUsage"
+        >
+          Submit
+        </button>
+      </div>
+    </section>
+
+    <!-- Creating a new price plan -->
+    <section class="light-blue accent-3 section3">
+      <div class="container center-align">
+        <h3>Create new price plan</h3>
+        <span x-show="showInputs2">
+          <input
+            x-model="planName2"
+            type="text"
+            placeholder="Enter Price plan name here"
+          />
+          <input
+            x-model="smsPrice"
+            type="number"
+            placeholder="Enter the price per sms here(in Rands)"
+          />
+          <input
+            x-model="callPrice"
+            type="number"
+            placeholder="Enter the price per call here(in Rands)"
+          />
+        </span>
+        <div
+          x-html="answer2"
+          x-show="showAnswer2"
+          style="font-size: x-large"
+        ></div>
+        <div
+          x-html="error2"
+          x-show="showError2"
+          style="font-size: x-large"
+        ></div>
+        <button
+          x-on:click="reset2"
+          x-show="showReset2"
+          class="btn waves-effect waves-light black light-blue-text text-darken-1"
+        >
+          Reset
+        </button>
+        <button 
+        class="btn waves-effect waves-light yellow lighten-2 light-blue-text text-darken-1" 
+        x-on:click="createPlan" 
+        x-show="showSubmit2"
+        x-bind:disabled="!planName2 || !smsPrice || !callPrice">
+          Submit
+        </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Updating a price plan -->
+    <section class="yellow lighten-2  section2">
+      <div class="container center-align">
+        <h3>Update price plan</h3>
+        <span x-show="showInputs3">
+          <input
+            x-model="planName3"
+            type="text"
+            placeholder="Enter Price plan name here"
+          />
+          <input
+            x-model="smsPriceUpdate"
+            type="number"
+            placeholder="Enter the price per sms here(in Rands)"
+          />
+          <input
+            x-model="callPriceUpdate"
+            type="number"
+            placeholder="Enter the price per call here(in Rands)"
+          />
+        </span>
+        <div
+          x-html="answer3"
+          x-show="showAnswer3"
+          style="font-size: x-large"
+        ></div>
+        <div
+          x-html="error3"
+          x-show="showError3"
+          style="font-size: x-large"
+        ></div>
+        <button
+          x-on:click="reset3"
+          x-show="showReset3"
+          class="btn waves-effect waves-light black light-blue-text text-darken-1"
+        >
+          Reset
+        </button>
+        <button 
+        class="btn waves-effect waves-light light-blue accent-3 yellow-text text-lighten-2" 
+        x-on:click="updatePlan" 
+        x-show="showSubmit3"
+        x-bind:disabled="!planName3 || !smsPriceUpdate || !callPriceUpdate">
+          Submit
+        </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Deleting a price plan -->
+    <section class="light-blue accent-3 section3">
+      <div class="container center-align">
+        <h3>Delete price plan</h3>
+        <span x-show="showInputs4">
+          <input
+            x-model="planName4"
+            type="text"
+            placeholder="Enter Price Plan name here"
+          />
+        </span>
+        <div
+          x-html="answer4"
+          x-show="showAnswer4"
+          style="font-size: x-large"
+        ></div>
+        <div
+          x-html="error4"
+          x-show="showError4"
+          style="font-size: x-large"
+        ></div>
+        <button
+          x-on:click="reset4"
+          x-show="showReset4"
+          class="btn waves-effect waves-light black light-blue-text text-darken-1"
+        >
+          Reset
+        </button>
+        <button 
+        class="btn waves-effect waves-light yellow lighten-2 light-blue-text text-darken-1" 
+        x-on:click="deletePlan" 
+        x-show="showSubmit4"
+        x-bind:disabled="!planName4">
+          Submit
+        </button>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
