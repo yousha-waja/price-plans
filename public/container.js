@@ -5,9 +5,8 @@ document.addEventListener("alpine:init", () => {
         showPrices : true,
         hidePrices : false,
         pricePlans: [],
-
         getPricePlan() {
-            axios.get('http://localhost:3011/api/price_plans/').then((result) => {
+            axios.get('https://price-plans.onrender.com/api/price_plans/').then((result) => {
                 this.pricePlans = result.data.price_plans;
                 console.log(this.pricePlans);
                 this.showPrices = false;
@@ -32,7 +31,7 @@ document.addEventListener("alpine:init", () => {
         showSubmit1: true,
         showInputs1:true,
         calculateTotal(){
-            axios.post('http://localhost:3011/api/phonebill/', {
+            axios.post('https://price-plans.onrender.com/api/phonebill/', {
                 price_plan: this.planName1,
                 actions : this.dataUsage
               }).then((result)=>{
@@ -83,7 +82,7 @@ document.addEventListener("alpine:init", () => {
             e.preventDefault();
             console.log("Button clicked. Starting createPlan function...");
         
-            axios.post('http://localhost:3011/api/price_plan/create', {
+            axios.post('https://price-plans.onrender.com/api/price_plan/create', {
                 plan_name: this.planName2,
                 sms_price: parseFloat(this.smsPrice).toFixed(2),
                 call_price: parseFloat(this.callPrice).toFixed(2)
@@ -145,7 +144,7 @@ document.addEventListener("alpine:init", () => {
         showSubmit3:true,
 
         updatePlan(){
-            axios.post('http://localhost:3011/api/price_plan/update',{
+            axios.post('https://price-plans.onrender.com/api/price_plan/update',{
                 plan_name : this.planName3,
                 sms_price : parseFloat(this.smsPriceUpdate).toFixed(2),
                 call_price : parseFloat(this.callPriceUpdate).toFixed(2)
@@ -199,7 +198,7 @@ document.addEventListener("alpine:init", () => {
         showReset4:false,
         showSubmit4:true,
         deletePlan(){
-            axios.post('http://localhost:3011/api/price_plan/delete', {
+            axios.post('https://price-plans.onrender.com/api/price_plan/delete', {
                 plan_name: this.planName4
             }).then((result) => {
                 if(result.data.error){
