@@ -40,11 +40,11 @@
         </h3>
         <template x-for="plan in pricePlans" :key="plan.id">
           <div x-show="hidePrices">
-            <div class="divider yellow lighten-2"></div>
+            <div class="divider yellow lighten-2 s1"></div>
             <h3 x-text="plan.plan_name"></h3>
             <p>SMS Price: R<span x-html="plan.sms_price"></span></p>
             <p>Call Price: R<span x-html="plan.call_price"></span></p>
-            <div class="divider yellow lighten-2"></div>
+            <!-- <div class="divider yellow lighten-2 s1"></div> -->
           </div>
         </template>
       </div>
